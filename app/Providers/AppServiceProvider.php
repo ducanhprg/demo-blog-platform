@@ -2,11 +2,11 @@
 
 namespace App\Providers;
 
-use App\Repositories\Contracts\ActivityLogRepositoryInterface;
-use App\Repositories\Contracts\UserRepositoryInterface;
-use App\Repositories\Eloquent\UserRepository;
-use App\Repositories\Mongo\ActivityLogRepository;
 use Illuminate\Support\ServiceProvider;
+use App\Domain\Contracts\UserRepositoryInterface;
+use App\Infrastructure\Repositories\EloquentUserRepository;
+use App\Domain\Contracts\LoginActionRepositoryInterface;
+use App\Infrastructure\Repositories\MongoDbLoginActionRepository;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -15,8 +15,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        $this->app->bind(UserRepositoryInterface::class, UserRepository::class);
-        $this->app->bind(ActivityLogRepositoryInterface::class, ActivityLogRepository::class);
+        $this->app->bind(UserRepositoryInterface::class, EloquentUserRepository::class);
+        $this->app->bind(LoginActionRepositoryInterface::class, MongoDbLoginActionRepository::class);
     }
 
     /**
